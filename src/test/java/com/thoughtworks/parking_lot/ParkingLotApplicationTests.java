@@ -37,4 +37,10 @@ public class ParkingLotApplicationTests {
         JSONArray json = JSONArray.fromObject(string);
         Assertions.assertEquals(2,json.size());
     }
+    @Test
+    public void should_return_all_parking_lot_with_page_size_default() throws Exception{
+        String string=this.mockMvc.perform(get("/parking-lots").param("page","1")).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        JSONArray json = JSONArray.fromObject(string);
+        Assertions.assertEquals(3,json.size());
+    }
 }
