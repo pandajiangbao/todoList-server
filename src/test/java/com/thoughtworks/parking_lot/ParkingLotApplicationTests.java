@@ -1,8 +1,10 @@
 package com.thoughtworks.parking_lot;
 
 import com.thoughtworks.parking_lot.entity.ParkingLot;
+import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -23,9 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ParkingLotApplicationTests {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ParkingLotRepository parkingLotRepository;
+
     @Test
     public void should_return_ok_when_delete_parking_lot() throws Exception{
         this.mockMvc.perform(delete("/parking-lots/83862bdc-743c-4d84-aa95-b5b3c33758bd")).andDo(print()).andExpect(status().isOk());
+        parkingLotRepository.saveAndFlush(new ParkingLot("83862bdc-743c-4d84-aa95-b5b3c33758bd","panda",10,"south"));
     }
     @Test
     public void should_return_all_parking_lot() throws Exception{
