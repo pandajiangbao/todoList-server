@@ -1,6 +1,7 @@
 package com.thoughtworks.parking_lot;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -42,5 +43,11 @@ public class ParkingLotApplicationTests {
         String string=this.mockMvc.perform(get("/parking-lots").param("page","1")).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         JSONArray json = JSONArray.fromObject(string);
         Assertions.assertEquals(3,json.size());
+    }
+    @Test
+    public void should_return_parking_lot_when_search_by_id() throws Exception{
+        String string=this.mockMvc.perform(get("/parking-lots/83862bdc-743c-4d84-aa95-b5b3c33758bd")).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        JSONObject jsonObject=JSONObject.fromObject(string);
+        Assertions.assertEquals("panda",jsonObject.getString("name"));
     }
 }

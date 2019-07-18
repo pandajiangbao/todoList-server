@@ -27,6 +27,11 @@ public class ParkingLotController {
         return ResponseEntity.ok(parkingLots);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity findById(@PathVariable String id) {
+        return ResponseEntity.ok(parkingLotService.findParkingLotsById(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         return parkingLotService.deleteParkingLotById(id)?ResponseEntity.ok().build():ResponseEntity.badRequest().build();
