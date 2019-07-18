@@ -13,15 +13,19 @@ public class ParkingLotService {
     @Autowired
     private ParkingLotRepository parkingLotRepository;
 
-    public List<ParkingLot> findAllParkingLots(){
+    public List<ParkingLot> findAllParkingLots() {
         return parkingLotRepository.findAll();
     }
 
-    public Optional<ParkingLot> findParkingLotsById(String id){
+    public Optional<ParkingLot> findParkingLotsById(String id) {
         return parkingLotRepository.findById(id);
     }
 
-    public Boolean deleteParkingLotById(String id){
+    public ParkingLot updateParkingLotById(String id, ParkingLot parkingLot) {
+        return parkingLotRepository.saveAndFlush(parkingLot);
+    }
+
+    public Boolean deleteParkingLotById(String id) {
         parkingLotRepository.deleteById(id);
         return !parkingLotRepository.findById(id).isPresent();
     }

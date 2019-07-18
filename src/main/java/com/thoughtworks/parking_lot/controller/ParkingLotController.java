@@ -32,6 +32,11 @@ public class ParkingLotController {
         return ResponseEntity.ok(parkingLotService.findParkingLotsById(id));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateById(@PathVariable String id,@RequestBody ParkingLot parkingLot) {
+        return ResponseEntity.ok(parkingLotService.updateParkingLotById(id,parkingLot));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         return parkingLotService.deleteParkingLotById(id)?ResponseEntity.ok().build():ResponseEntity.badRequest().build();
