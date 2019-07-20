@@ -16,6 +16,8 @@ public class ParkingOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(unique = true)
+    private String parkingLotName;
 
     private String carNumber;
 
@@ -25,16 +27,18 @@ public class ParkingOrder {
 
     private Boolean status;
 
+    private Integer parkingLotId;
+
     public ParkingOrder(String carNumber, Date createdTime, Date closedTime) {
         this.carNumber = carNumber;
         this.createdTime = createdTime;
         this.closedTime = closedTime;
     }
 
-    public ParkingOrder(String carNumber, Date createdTime, Date closedTime, Boolean status) {
+    public ParkingOrder(String parkingLotName, String carNumber, Date createdTime, Date closedTime) {
+        this.parkingLotName = parkingLotName;
         this.carNumber = carNumber;
         this.createdTime = createdTime;
         this.closedTime = closedTime;
-        this.status = status;
     }
 }

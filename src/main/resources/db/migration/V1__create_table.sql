@@ -9,6 +9,7 @@ CREATE TABLE parking_lot
 CREATE TABLE parking_order
 (
     ID int not null auto_increment not null ,
+    parking_lot_name varchar(255),
     car_number varchar(255),
     created_time timestamp,
     closed_time timestamp,

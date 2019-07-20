@@ -35,8 +35,19 @@ public class ParkingOrderTests {
     private ParkingOrderRepository parkingOrderRepository;
     @Test
     public void should_return_parking_order_when_save_parking_order() throws Exception{
-        ParkingOrder parkingOrder = new ParkingOrder("123456789", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()),true);
+        ParkingOrder parkingOrder = new ParkingOrder("panda","123456789", new Date(), new Date());
         ParkingOrder save = parkingOrderRepository.save(parkingOrder);
         Assertions.assertEquals(parkingOrder,save);
+    }
+
+    @Test
+    public void should_return_ok_when_save_parking_order() throws Exception{
+        ParkingOrder parkingOrder = new ParkingOrder("panda","987456", new Date(), new Date());
+        JSONObject jsonObject=JSONObject.fromObject(parkingOrder);
+        System.out.println(jsonObject);
+        this.mockMvc.perform(post("/parking-orders").contentType(MediaType.APPLICATION_PROBLEM_JSON_UTF8)
+                .content(jsonObject.toString()))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

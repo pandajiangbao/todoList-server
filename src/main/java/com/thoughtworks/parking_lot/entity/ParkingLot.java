@@ -23,13 +23,15 @@ public class ParkingLot implements Serializable {
 
     private String location;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "parkingLotId")
-    private List<ParkingOrder> parkingOrders;
-
     public ParkingLot(String name, Integer capacity, String location) {
         this.name = name;
         this.capacity = capacity;
         this.location = location;
     }
+
+//    public void addOrder(ParkingOrder parkingOrder){
+//        if (parkingOrder!=null){
+//            this.parkingOrders.add(parkingOrder);
+//        }
+//    }
 }

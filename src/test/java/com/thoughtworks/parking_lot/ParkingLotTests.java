@@ -58,11 +58,4 @@ public class ParkingLotTests {
         JSONObject jsonObject1=JSONObject.fromObject(string);
         Assertions.assertEquals("milo",jsonObject1.getString("name"));
     }
-    @Test
-    public void should_return_order_include_parking_lot()throws Exception{
-//        ParkingLot parkingLot = parkingLotRepository.findById("1").get();
-//        ParkingOrder order = new ParkingOrder("粤A567890",new Date(),new Date(),true,parkingLot.getId());
-//        ParkingOrder order1 = orderRepository.saveAndFlush(order);
-//        System.out.println("order1 = " + order1);
-    }
 }
