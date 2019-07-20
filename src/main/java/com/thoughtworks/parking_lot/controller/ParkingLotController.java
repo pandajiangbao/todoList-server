@@ -21,10 +21,8 @@ public class ParkingLotController {
     }
 
     @GetMapping(params = {"page","pageSize"})
-    public ResponseEntity findAllWithPage(@RequestParam Integer page,@RequestParam(defaultValue = "15") Integer pageSize) {
-        List<ParkingLot> parkingLots=parkingLotService.findAllParkingLots();
-        parkingLots=parkingLots.stream().skip((page-1)*pageSize).limit(pageSize).collect(Collectors.toList());
-        return ResponseEntity.ok(parkingLots);
+    public ResponseEntity findAllWithPage(@RequestParam Integer page,@RequestParam Integer pageSize) {
+        return ResponseEntity.ok(parkingLotService.findAllParkingLotsWithPage(page,pageSize));
     }
 
     @GetMapping("/{id}")
