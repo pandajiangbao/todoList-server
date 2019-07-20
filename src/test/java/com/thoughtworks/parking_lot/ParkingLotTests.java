@@ -2,9 +2,9 @@ package com.thoughtworks.parking_lot;
 
 import com.thoughtworks.parking_lot.entity.ParkingLot;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
+import com.thoughtworks.parking_lot.repository.ParkingOrderRepository;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -22,16 +22,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ParkingLotApplicationTests {
+public class ParkingLotTests {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ParkingLotRepository parkingLotRepository;
-
+    @Autowired
+    private ParkingOrderRepository parkingOrderRepository;
     @Test
     public void should_return_ok_when_delete_parking_lot() throws Exception{
-        this.mockMvc.perform(delete("/parking-lots/83862bdc-743c-4d84-aa95-b5b3c33758bd")).andDo(print()).andExpect(status().isOk());
-        parkingLotRepository.saveAndFlush(new ParkingLot("83862bdc-743c-4d84-aa95-b5b3c33758bd","panda",10,"south"));
+        this.mockMvc.perform(delete("/parking-lots/1")).andDo(print()).andExpect(status().isOk());
     }
     @Test
     public void should_return_all_parking_lot() throws Exception{
@@ -47,15 +47,22 @@ public class ParkingLotApplicationTests {
     }
     @Test
     public void should_return_parking_lot_when_search_by_id() throws Exception{
-        String string=this.mockMvc.perform(get("/parking-lots/83862bdc-743c-4d84-aa95-b5b3c33758bd")).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        String string=this.mockMvc.perform(get("/parking-lots/1")).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         JSONObject jsonObject=JSONObject.fromObject(string);
         Assertions.assertEquals("panda",jsonObject.getString("name"));
     }
     @Test
     public void should_return_ok_and_updated_parking_lot_when_update_parking_lot_by_id() throws Exception{
         JSONObject jsonObject= JSONObject.fromObject(new ParkingLot("milo",22,"north"));
-        String string=this.mockMvc.perform(put("/parking-lots/83862bdc-743c-4d84-aa95-b5b3c33758bd").contentType(MediaType.APPLICATION_PROBLEM_JSON_UTF8).content(jsonObject.toString())).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        String string=this.mockMvc.perform(put("/parking-lots/1").contentType(MediaType.APPLICATION_PROBLEM_JSON_UTF8).content(jsonObject.toString())).andDo(print()).andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         JSONObject jsonObject1=JSONObject.fromObject(string);
         Assertions.assertEquals("milo",jsonObject1.getString("name"));
+    }
+    @Test
+    public void should_return_order_include_parking_lot()throws Exception{
+//        ParkingLot parkingLot = parkingLotRepository.findById("1").get();
+//        ParkingOrder order = new ParkingOrder("粤A567890",new Date(),new Date(),true,parkingLot.getId());
+//        ParkingOrder order1 = orderRepository.saveAndFlush(order);
+//        System.out.println("order1 = " + order1);
     }
 }

@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/parking-lots")
 public class ParkingLotController {
@@ -26,17 +23,17 @@ public class ParkingLotController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable String id) {
+    public ResponseEntity findById(@PathVariable Integer id) {
         return ResponseEntity.ok(parkingLotService.findParkingLotsById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateById(@PathVariable String id,@RequestBody ParkingLot parkingLot) {
+    public ResponseEntity updateById(@PathVariable Integer id,@RequestBody ParkingLot parkingLot) {
         return ResponseEntity.ok(parkingLotService.updateParkingLotById(id,parkingLot));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable String id) {
+    public ResponseEntity delete(@PathVariable Integer id) {
         return parkingLotService.deleteParkingLotById(id)?ResponseEntity.ok().build():ResponseEntity.badRequest().build();
     }
 }

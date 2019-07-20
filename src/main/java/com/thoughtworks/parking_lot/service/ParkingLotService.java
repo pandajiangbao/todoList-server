@@ -23,15 +23,15 @@ public class ParkingLotService {
         return parkingLotRepository.findAll(PageRequest.of(page-1,pageSize));
     }
 
-    public Optional<ParkingLot> findParkingLotsById(String id) {
+    public Optional<ParkingLot> findParkingLotsById(Integer id) {
         return parkingLotRepository.findById(id);
     }
 
-    public ParkingLot updateParkingLotById(String id, ParkingLot parkingLot) {
+    public ParkingLot updateParkingLotById(Integer id, ParkingLot parkingLot) {
         return parkingLotRepository.saveAndFlush(parkingLot);
     }
 
-    public Boolean deleteParkingLotById(String id) {
+    public Boolean deleteParkingLotById(Integer id) {
         parkingLotRepository.deleteById(id);
         return !parkingLotRepository.findById(id).isPresent();
     }
