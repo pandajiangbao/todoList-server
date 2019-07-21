@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class ParkingOrderService {
@@ -28,5 +29,16 @@ public class ParkingOrderService {
             e.printStackTrace();
         }
         return true;
+    }
+    public ParkingOrder closeOrder(Integer id) {
+        ParkingOrder parkingOrder = parkingOrderRepository.findById(id).get();
+        parkingOrder.setClosedTime(new Date());
+        parkingOrder.setStatus(false);
+        try {
+            return parkingOrderRepository.saveAndFlush(parkingOrder);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

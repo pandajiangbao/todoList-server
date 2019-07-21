@@ -15,4 +15,8 @@ public class ParkingOrderController {
     public ResponseEntity createOrder(@RequestBody ParkingOrder parkingOrder) {
         return parkingOrderService.createOrder(parkingOrder)?ResponseEntity.ok().build():ResponseEntity.badRequest().build();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity closeOrder(@PathVariable Integer id) {
+        return ResponseEntity.ok(parkingOrderService.closeOrder(id));
+    }
 }

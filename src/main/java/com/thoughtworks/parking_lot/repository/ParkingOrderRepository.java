@@ -4,5 +4,6 @@ import com.thoughtworks.parking_lot.entity.ParkingOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ParkingOrderRepository extends JpaRepository<ParkingOrder,Integer> {
+//    public ParkingOrder findByCarNumber(String carNumber);
 }
 

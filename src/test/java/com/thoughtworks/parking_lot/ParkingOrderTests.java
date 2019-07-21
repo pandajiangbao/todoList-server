@@ -4,6 +4,7 @@ import com.thoughtworks.parking_lot.entity.ParkingLot;
 import com.thoughtworks.parking_lot.entity.ParkingOrder;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import com.thoughtworks.parking_lot.repository.ParkingOrderRepository;
+import com.thoughtworks.parking_lot.service.ParkingOrderService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,12 +37,8 @@ public class ParkingOrderTests {
     private ParkingLotRepository parkingLotRepository;
     @Autowired
     private ParkingOrderRepository parkingOrderRepository;
-//    @BeforeEach
-//    public void prepare_data(){
-//        parkingLotRepository.saveAndFlush(new ParkingLot("panda",10,"south"));
-//        parkingLotRepository.saveAndFlush(new ParkingLot("eric",11,"east"));
-//        parkingLotRepository.saveAndFlush(new ParkingLot("bill",12,"west"));
-//    }
+    @Autowired
+    private ParkingOrderService parkingOrderService;
     @Test
     public void should_return_parking_order_when_save_parking_order() throws Exception{
         ParkingOrder parkingOrder = new ParkingOrder("milo","123456789", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
@@ -57,5 +55,17 @@ public class ParkingOrderTests {
                 .content(jsonObject.toString()))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void should_return_ok_and_order_status_is_false_when_close_parking_order() throws Exception{
+        parkingLotRepository.saveAndFlush(new ParkingLot("panda",10,"south"));
+        parkingOrderService.createOrder(new ParkingOrder("panda","987456"));
+        String string=this.mockMvc.perform(put("/parking-orders/2"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        JSONObject jsonObject=JSONObject.fromObject(string);
+        Assertions.assertEquals(false,jsonObject.getBoolean("status"));
     }
 }
