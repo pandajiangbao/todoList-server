@@ -13,9 +13,6 @@ public class ParkingOrderController {
     private ParkingOrderService parkingOrderService;
     @PostMapping()
     public ResponseEntity createOrder(@RequestBody ParkingOrder parkingOrder) {
-//        parkingOrderService.createOrder(parkingOrder);
-        System.out.println();
-        return ResponseEntity.ok().build();
-        //        return parkingOrderService.createOrder(parkingOrder)?ResponseEntity.ok().build():ResponseEntity.badRequest().build();
+        return parkingOrderService.createOrder(parkingOrder)?ResponseEntity.ok().build():ResponseEntity.badRequest().build();
     }
 }

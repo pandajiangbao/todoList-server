@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -29,10 +28,9 @@ public class ParkingOrder {
 
     private Integer parkingLotId;
 
-    public ParkingOrder(String carNumber, Date createdTime, Date closedTime) {
+    public ParkingOrder(String parkingLotName, String carNumber) {
+        this.parkingLotName = parkingLotName;
         this.carNumber = carNumber;
-        this.createdTime = createdTime;
-        this.closedTime = closedTime;
     }
 
     public ParkingOrder(String parkingLotName, String carNumber, Date createdTime, Date closedTime) {

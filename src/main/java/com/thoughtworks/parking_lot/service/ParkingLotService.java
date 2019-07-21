@@ -28,6 +28,7 @@ public class ParkingLotService {
     }
 
     public ParkingLot updateParkingLotById(Integer id, ParkingLot parkingLot) {
+        parkingLot.setId(id);
         return parkingLotRepository.saveAndFlush(parkingLot);
     }
 
