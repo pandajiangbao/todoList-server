@@ -2,6 +2,7 @@ package com.thoughtworks.parking_lot.service;
 
 import com.thoughtworks.parking_lot.entity.ParkingLot;
 import com.thoughtworks.parking_lot.entity.ParkingOrder;
+import com.thoughtworks.parking_lot.exception.FullCarException;
 import com.thoughtworks.parking_lot.repository.ParkingLotRepository;
 import com.thoughtworks.parking_lot.repository.ParkingOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,11 @@ public class ParkingOrderService {
     @Autowired
     private ParkingOrderRepository parkingOrderRepository;
 
-    public Boolean createOrder(ParkingOrder parkingOrder) {
+    public Boolean createOrder(ParkingOrder parkingOrder) throws FullCarException {
         ParkingLot parkingLot = parkingLotRepository.findByName(parkingOrder.getParkingLotName());
+        if (parkingOrderRepository.findAllByParkingLotName(parkingLot.getName()).size()>=parkingLot.getCapacity()){
+            throw new FullCarException();
+        }
         parkingOrder.setParkingLotId(parkingLot.getId());
         parkingOrder.setCreatedTime(new Date());
         parkingOrder.setClosedTime(new Date());

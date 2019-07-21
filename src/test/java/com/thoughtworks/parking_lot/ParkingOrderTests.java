@@ -68,4 +68,20 @@ public class ParkingOrderTests {
         JSONObject jsonObject=JSONObject.fromObject(string);
         Assertions.assertEquals(false,jsonObject.getBoolean("status"));
     }
+
+    @Test
+    public void should_return_bad_request_and_error_message_when_parking_lot_full() throws Exception{
+        parkingLotRepository.saveAndFlush(new ParkingLot("pandaGor",2,"south"));
+        parkingOrderService.createOrder(new ParkingOrder("pandaGor","987456"));
+        parkingOrderService.createOrder(new ParkingOrder("pandaGor","123456"));
+        ParkingOrder parkingOrder = new ParkingOrder("pandaGor","6666666");
+        JSONObject jsonObject=JSONObject.fromObject(parkingOrder);
+        String string=this.mockMvc.perform(post("/parking-orders")
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON_UTF8)
+                .content(jsonObject.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andReturn().getResponse().getContentAsString();
+        Assertions.assertEquals("停车场已经满",string);
+    }
 }
