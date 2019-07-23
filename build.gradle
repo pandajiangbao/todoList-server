@@ -54,6 +54,6 @@ dependencies {
     compile 'net.sf.json-lib:json-lib:2.4:jdk15'
 }
 flyway {
-    url = 'jdbc:h2:mem:parking'
+    url = 'jdbc:h2:mem:todo'
     user = 'sa'
 }
