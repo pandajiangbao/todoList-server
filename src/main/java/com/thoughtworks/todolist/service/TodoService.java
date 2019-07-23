@@ -28,9 +28,8 @@ public class TodoService {
             todoRepository.saveAndFlush(todo);
             return true;
         }catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException("todo不能重复");
         }
-        return false;
     }
     public Todo updateTodoById(Integer id, Todo todo) {
         todo.setId(id);

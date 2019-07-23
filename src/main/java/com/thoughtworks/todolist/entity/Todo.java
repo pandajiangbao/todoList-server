@@ -17,6 +17,7 @@ public class Todo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String value;
 
     private Boolean isSelected;
